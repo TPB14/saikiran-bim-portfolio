@@ -240,6 +240,24 @@ document.addEventListener('DOMContentLoaded', () => {
       if (name && email && subject && message) {
         // Trigger visual success overlay
         formSuccess.classList.add('active');
+
+        // Send submission using AJAX Fetch in background (No redirection!)
+        const formData = new FormData(contactForm);
+        fetch(contactForm.action, {
+          method: 'POST',
+          body: formData,
+          headers: {
+            'Accept': 'application/json'
+          }
+        })
+        .then(response => {
+          if (!response.ok) {
+            console.error('Failed to coordinate request.');
+          }
+        })
+        .catch(err => {
+          console.error("Error sending form:", err);
+        });
       }
     });
   }
